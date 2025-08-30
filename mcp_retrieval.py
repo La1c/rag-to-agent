@@ -10,8 +10,16 @@ from sentence_transformers import SentenceTransformer
 mcp = FastMCP("local-retrieval")
 
 
-class AcrticEmbeddings(Embeddings):
-    def __init__(self, model_name, batch_size=32, device="mps"):
+class ArcticEmbeddings(Embeddings):
+    def __init__(self, model_name, batch_size=32):
+        import torch
+        if torch.cuda.is_available():
+            device = "cuda"
+        elif torch.backends.mps.is_available():
+            device = "mps"
+        else:
+            device = "cpu"
+
         self.model = SentenceTransformer(
             model_name,
             trust_remote_code=True,
@@ -49,7 +57,7 @@ class ToolClient:
         chroma_client = Chroma(
             collection_name="wiki_chunks_30K",
             persist_directory="./chroma_30K",
-            embedding_function=AcrticEmbeddings(model_name),
+            embedding_function=ArcticEmbeddings(model_name),
             client_settings=Settings(anonymized_telemetry=False),
         )
 
