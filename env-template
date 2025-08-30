@@ -1,0 +1,8 @@
+#This is a template for your keys
+#Fill it in and rename into `.env`
+
+OPENAI_API_KEY=
+LANGFUSE_SECRET_KEY=
+LANGFUSE_PUBLIC_KEY=
+LANGFUSE_HOST="http://localhost:3000"
+TAVILY_API_KEY=
